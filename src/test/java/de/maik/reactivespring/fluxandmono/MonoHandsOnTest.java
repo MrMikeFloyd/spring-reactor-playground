@@ -6,7 +6,7 @@ import reactor.test.StepVerifier;
 
 import java.util.function.Supplier;
 
-class MonoTest {
+class MonoHandsOnTest {
 
     @Test
     void canSubscribeToAndEmitString() {
@@ -44,4 +44,5 @@ class MonoTest {
                 .expectNext("adam")
                 .verifyComplete();
     }
+
 }
