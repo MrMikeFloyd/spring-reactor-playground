@@ -1,9 +1,15 @@
 # Reactive Spring Playground
 
-Not necessarily usable code, I'm just fiddling around with Spring Reactor.
+This isn't necessarily usable code, I'm just fiddling around with Spring Reactor.
 
 ## How to run
 
 Most stuff here is unit test code that isn't backed by an actual application.
 
-build with `mvn clean package`, then execute using `java -jar target/<thisapp>.jar`
+I'd recommend opening in you IDE, and running the different test cases.
+
+## Further reading
+
+The Reactor docs are a good place to start!
+
+Which operator do I need? https://projectreactor.io/docs/core/release/reference/#which-operator
