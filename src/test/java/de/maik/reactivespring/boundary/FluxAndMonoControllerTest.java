@@ -22,6 +22,8 @@ class FluxAndMonoControllerTest {
 
     private static final String FLUX_ENDPOINT_URI = "/flux";
     private static final String FLUX_STREAM_ENDPOINT_URI = "/fluxstream";
+    private static final String MONO_ENDPOINT_URI = "/mono";
+
     @Autowired
     WebTestClient webTestClient; // equivalent to TestRestTemplate from SpringMVC
 
@@ -108,6 +110,16 @@ class FluxAndMonoControllerTest {
                 .expectNext(3L)
                 .thenCancel()
                 .verify();
+    }
+
+    @Test
+    void canCallAndConsumeMono() {
+        webTestClient.get().uri(MONO_ENDPOINT_URI)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Integer.class)
+                .consumeWith(response -> assertThat(response.getResponseBody()).isEqualTo(1));
     }
 
 }
