@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@WebFluxTest
+@WebFluxTest // Will only scan for rest controllers and web components
 @ExtendWith(SpringExtension.class)
 class FluxAndMonoControllerTest {
 
