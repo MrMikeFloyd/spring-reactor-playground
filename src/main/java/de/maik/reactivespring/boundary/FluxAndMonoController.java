@@ -21,12 +21,11 @@ public class FluxAndMonoController {
     }
 
     /**
-     * Returns as stream, emits for every onNext
+     * Returns as infinite stream (cold publisher, new instance for every client connecting)
      */
     @GetMapping(value = "/fluxstream", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-    public Flux<Integer> returnFluxStream() {
-        return Flux.just(1, 2, 3, 4)
-                .delayElements(Duration.ofSeconds(1))
+    public Flux<Long> returnFluxStream() {
+        return Flux.interval(Duration.ofSeconds(1))
                 .log();
     }
 

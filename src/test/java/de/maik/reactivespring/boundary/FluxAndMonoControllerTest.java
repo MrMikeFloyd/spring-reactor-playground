@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FluxAndMonoControllerTest {
 
     private static final String FLUX_ENDPOINT_URI = "/flux";
+    private static final String FLUX_STREAM_ENDPOINT_URI = "/fluxstream";
     @Autowired
     WebTestClient webTestClient; // equivalent to TestRestTemplate from SpringMVC
 
@@ -87,6 +88,26 @@ class FluxAndMonoControllerTest {
                 .expectStatus().isOk()
                 .expectBodyList(Integer.class)
                 .consumeWith(response -> assertThat(response.getResponseBody()).isEqualTo(expectedResultList));
+    }
+
+    @Test
+    void canCallAndConsumeFirst4ElementsFromInfiniteFluxStream() {
+        Flux<Long> longFluxStream = webTestClient
+                .get()
+                .uri(FLUX_STREAM_ENDPOINT_URI)
+                .accept(MediaType.APPLICATION_STREAM_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .returnResult(Long.class)
+                .getResponseBody();
+
+        StepVerifier.create(longFluxStream)
+                .expectNext(0L)
+                .expectNext(1L)
+                .expectNext(2L)
+                .expectNext(3L)
+                .thenCancel()
+                .verify();
     }
 
 }
