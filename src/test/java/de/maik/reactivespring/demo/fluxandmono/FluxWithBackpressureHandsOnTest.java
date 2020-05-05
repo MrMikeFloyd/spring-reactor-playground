@@ -1,4 +1,4 @@
-package de.maik.reactivespring.fluxandmono;
+package de.maik.reactivespring.demo.fluxandmono;
 
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.BaseSubscriber;
