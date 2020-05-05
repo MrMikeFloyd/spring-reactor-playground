@@ -1,4 +1,4 @@
-package de.maik.reactivespring.boundary;
+package de.maik.reactivespring.demo.boundary;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

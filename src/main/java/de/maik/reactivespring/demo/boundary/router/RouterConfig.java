@@ -1,6 +1,6 @@
-package de.maik.reactivespring.boundary.router;
+package de.maik.reactivespring.demo.boundary.router;
 
-import de.maik.reactivespring.boundary.handler.SampleHandler;
+import de.maik.reactivespring.demo.boundary.handler.SampleHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;

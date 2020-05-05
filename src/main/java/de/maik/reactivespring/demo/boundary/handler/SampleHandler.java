@@ -1,4 +1,4 @@
-package de.maik.reactivespring.boundary.handler;
+package de.maik.reactivespring.demo.boundary.handler;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;

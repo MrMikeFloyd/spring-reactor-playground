@@ -1,4 +1,4 @@
-package de.maik.reactivespring.boundary;
+package de.maik.reactivespring.demo.boundary;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
