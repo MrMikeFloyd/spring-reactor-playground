@@ -1,4 +1,4 @@
-package de.maik.reactivespring.inventory.document;
+package de.maik.reactivespring.item.document;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;

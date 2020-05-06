@@ -1,4 +1,4 @@
-package de.maik.reactivespring.inventory.document;
+package de.maik.reactivespring.item.document;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

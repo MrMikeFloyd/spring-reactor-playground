@@ -1,4 +1,4 @@
-package de.maik.reactivespring.inventory.document;
+package de.maik.reactivespring.item.document;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
