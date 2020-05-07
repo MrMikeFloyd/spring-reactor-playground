@@ -101,6 +101,30 @@ class ItemControllerTest {
                 .expectBody(Void.class);
     }
 
+    @Test
+    void updatingItemReturns200AndTheReturnedItemContainsTheUpdatedValue() {
+        double newItemPrice = 42.42;
+        Item item = new Item(null, PREDEFINED_ITEM_DESCRIPTION, newItemPrice);
+
+        webTestClient.put().uri(ITEMS_ENDPOINT_V1.concat("/{itemId}"), PREDEFINED_ITEM_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(item), Item.class)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.price").isEqualTo(newItemPrice);
+    }
+
+    @Test
+    void updatingNonExistingItemByIdReturnsHttp404() {
+        Item item = new Item(null, PREDEFINED_ITEM_DESCRIPTION, 123);
+        webTestClient.put().uri(ITEMS_ENDPOINT_V1.concat("/{itemId}"), "NOTAVAILABLE001")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(item), Item.class)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
     private void setupTestDatabase() {
         itemRepository.deleteAll().thenMany(Flux.fromIterable(createSampleItems()))
                 .flatMap(itemRepository::save)
