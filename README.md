@@ -26,19 +26,25 @@ The general API emits fluxes and monos. Nothing fancy, very basic:
 
 ### Inventory API - stock management
 
-The stock management API provides CRUD operations stock records. Again, very basic:
+The stock management API provides CRUD operations stock records. Two versions are available:
 
-* `GET http://localhost:8080/v1/items` - emits all items in the stock database
-* `POST http://localhost:8080/v1/items` - creates a new item
-* `GET http://localhost:8080/v1/items/<some-id>` - emits a specific item from the stock database
-* `DELETE http://localhost:8080/v1/items/<some-id>` - deletes a specific item from the stock database
-* `PUT http://localhost:8080/v1/items/<some-id>` - updates a specific item from the stock database
+* `v1`: Classic Spring REST controller
+* `v2`: Functional-style REST router/handler setup
+
+Exposed endpoints:
+
+* `GET http://localhost:8080/v[1|2]/items` - emits all items in the stock database
+* `POST http://localhost:8080/v[1|2]/items` - creates a new item
+* `GET http://localhost:8080/v[1|2]/items/<some-id>` - emits a specific item from the stock database
+* `DELETE http://localhost:8080/v[1|2]/items/<some-id>` - deletes a specific item from the stock database
+* `PUT http://localhost:8080/v[1|2]/items/<some-id>` - updates a specific item from the stock database
 
 The persistence backend uses a MongoDB, so you will need to have at least a MongoDB community installed on your machine -
 please refer to [the docs](https://docs.mongodb.com/manual/tutorial/) for more information.
 
 ## Further reading
 
-The [Spring Reactor docs](https://projectreactor.io/docs) are a good place to start!
+* The [Spring Reactor docs](https://projectreactor.io/docs) are a good place to start!
+* [Another example](https://github.com/hantsy/spring-reactive-sample/blob/master/boot-routes/src/main/java/com/example/demo/DemoApplication.java) for reactive REST endpoint setups with Spring 
 
 Unsure which operator to use? See https://projectreactor.io/docs/core/release/reference/#which-operator
