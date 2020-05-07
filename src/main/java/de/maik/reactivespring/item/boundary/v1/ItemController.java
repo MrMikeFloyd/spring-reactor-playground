@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * Classic, Spring-Style REST Controller for Items API
+ */
 @RestController
 @Slf4j
 public class ItemController {
@@ -54,12 +57,12 @@ public class ItemController {
 
     @PutMapping(ITEMS_ENDPOINT_V1 + "/{itemId}")
     public Mono<ResponseEntity<Item>> updateOne(@PathVariable String itemId,
-                                                @RequestBody Item item) {
+                                                @RequestBody Item itemFromRequest) {
         return itemRepository.findById(itemId)
-                .flatMap(currentItem -> {
-                    currentItem.setDescription(item.getDescription());
-                    currentItem.setPrice(item.getPrice());
-                    return itemRepository.save(currentItem);
+                .flatMap(itemFromRepository -> {
+                    itemFromRepository.setDescription(itemFromRequest.getDescription());
+                    itemFromRepository.setPrice(itemFromRequest.getPrice());
+                    return itemRepository.save(itemFromRepository);
                 })
                 .map(updatedItem -> new ResponseEntity<>(updatedItem, HttpStatus.OK))
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
