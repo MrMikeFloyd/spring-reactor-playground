@@ -3,7 +3,9 @@ package de.maik.reactivespring.demo.boundary;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -17,9 +19,10 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@WebFluxTest // Will only scan for rest controllers and web components
-@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@AutoConfigureWebTestClient
 @DirtiesContext
+@ExtendWith(SpringExtension.class)
 class FluxAndMonoControllerTest {
 
     private static final String FLUX_ENDPOINT_URI = "/flux";
