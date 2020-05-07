@@ -92,6 +92,15 @@ class ItemControllerTest {
                         .isEqualTo(item));
     }
 
+    @Test
+    void deletingItemReturns200AndEmptyResponseBody() {
+        webTestClient.delete().uri(ITEMS_ENDPOINT_V1.concat("/{itemId}"), PREDEFINED_ITEM_ID)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Void.class);
+    }
+
     private void setupTestDatabase() {
         itemRepository.deleteAll().thenMany(Flux.fromIterable(createSampleItems()))
                 .flatMap(itemRepository::save)
