@@ -13,6 +13,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
 import java.util.List;
@@ -74,6 +75,21 @@ class ItemControllerTest {
         webTestClient.get().uri(ITEMS_ENDPOINT_V1.concat("/{itemId}"), "NOTAVAILABLE001")
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void postingItemReturnsHttp201AndTheNewlyCreatedItem() {
+        Item item = new Item(null, "Propain Tyee 2020 29", 3499.00);
+        webTestClient.post().uri(ITEMS_ENDPOINT_V1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(item), Item.class)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(Item.class)
+                .consumeWith(response -> assertThat(response.getResponseBody())
+                        .usingRecursiveComparison()
+                        .ignoringFields("id")
+                        .isEqualTo(item));
     }
 
     private void setupTestDatabase() {
