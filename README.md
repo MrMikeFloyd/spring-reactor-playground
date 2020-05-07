@@ -3,12 +3,15 @@
 This is a playground project I set up for getting familiar with non-blocking backends using Spring Reactor.
 There is no underlying business use case I constructed, I just played around with the features and data models a bit.
 
-## How to run
+## How to use/run
 
-A coded quite a few usage scenarios as JUnit test cases, so feel free to explore `src/test` for examples.
+The playground has 3 areas:
 
-You will also find a few minimalistic rest endpoints returning Fluxes and Monos, as well as a minimal stock management API.
-Build/run it as follows:
+1. I coded general usage scenarios as JUnit test cases, so feel free to explore `src/test` for examples
+2. There is a general API that shows general usage examples available - see _General API_ for more information
+3. There is a stock management API which showcases general CRUD operations - see _Inventory API_ for more information
+
+Run the application as follows:
 
 ```
 mvn clean package && java -jar -Dspring.profiles.active=dev target/reactive-spring*.jar
