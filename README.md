@@ -11,7 +11,7 @@ You will also find a few minimalistic rest endpoints returning Fluxes and Monos,
 Build/run it as follows:
 
 ```
-`mvn clean package && java -jar -Dspring.profiles.active=dev target/reactive-spring*.jar`.
+mvn clean package && java -jar -Dspring.profiles.active=dev target/reactive-spring*.jar
 ```
 
 ### General API - Fluxes and Monos
