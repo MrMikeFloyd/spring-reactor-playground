@@ -3,8 +3,11 @@ package de.maik.reactivespringclient.item.boundary;
 import de.maik.reactivespringclient.item.entity.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -19,8 +22,8 @@ public class ItemClientController {
 
     @Value("${items.api.base.url}")
     String itemsApiBaseUrl;
-    private static final String ITEMS_RESOURCE_CLIENT_ENDPOINT_URL = "/items";
-    private static final String ITEMS_RESOURCE_V2 = "/v2/items";
+    private static final String CLIENT_ITEMS_RESOURCE_ENDPOINT_URL = "/items";
+    private static final String SERVER_ITEMS_RESOURCE_V2_ENDPOINT_URL = "/v2/items";
     private WebClient webClient;
 
     @PostConstruct
@@ -30,37 +33,49 @@ public class ItemClientController {
     }
 
     /**
-     * Returns all items. Demonstrates the use of 2 different methods:
+     * Returns all items. Demonstrates the use of 2 different methods to achieve this:
      * <ul>
      *     <li>useRetrieve = true uses retrieve => responseBody is returned directly</li>
      *     <li>useRetrieve = false uses exchange => serverResponse can be handled manually</li>
      * </ul>
+     *
      * @return Items using retrieve
      */
-    @GetMapping(ITEMS_RESOURCE_CLIENT_ENDPOINT_URL)
+    @GetMapping(CLIENT_ITEMS_RESOURCE_ENDPOINT_URL)
     public Flux<Item> getAll(@RequestParam(defaultValue = "true") boolean useRetrieve) {
         Flux<Item> itemsFlux;
         if (useRetrieve) {
-            itemsFlux = webClient.get().uri(ITEMS_RESOURCE_V2)
+            itemsFlux = webClient.get().uri(SERVER_ITEMS_RESOURCE_V2_ENDPOINT_URL)
                     .retrieve()
                     .bodyToFlux(Item.class)
-                    .log("[Retrieve] GET all items from Server: ");
+                    .log("[Retrieve] GET all items from server: ");
         } else {
-            itemsFlux = webClient.get().uri(ITEMS_RESOURCE_V2)
+            itemsFlux = webClient.get().uri(SERVER_ITEMS_RESOURCE_V2_ENDPOINT_URL)
                     .exchange()
                     .flatMapMany(serverResponse -> serverResponse.bodyToFlux(Item.class))
-                    .log("[Exchange] GET all items from Server: ");
+                    .log("[Exchange] GET all items from server: ");
         }
 
         return itemsFlux;
     }
 
-    @GetMapping(ITEMS_RESOURCE_CLIENT_ENDPOINT_URL + "/{itemId}")
+    @GetMapping(CLIENT_ITEMS_RESOURCE_ENDPOINT_URL + "/{itemId}")
     public Mono<Item> retrieveById(@PathVariable String itemId) {
-        return webClient.get().uri(ITEMS_RESOURCE_V2.concat("/".concat(itemId)))
+        return webClient.get().uri(SERVER_ITEMS_RESOURCE_V2_ENDPOINT_URL.concat("/".concat(itemId)))
                 .retrieve()
                 .bodyToMono(Item.class)
-                .log("[Retrieve] GET item from Server: ");
+                .log("GET item from server: ");
+    }
+
+    @PostMapping(CLIENT_ITEMS_RESOURCE_ENDPOINT_URL)
+    public Mono<Item> addOne(@RequestBody Item item) {
+        Mono<Item> itemMono = Mono.just(item);
+        return webClient.post().uri(SERVER_ITEMS_RESOURCE_V2_ENDPOINT_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(itemMono, Item.class)
+                .retrieve()
+                .bodyToMono(Item.class)
+                .log("POST item to server: ");
     }
 
 }
