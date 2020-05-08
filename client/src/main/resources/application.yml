@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  profiles: dev
+server:
+  port: 8081
+items:
+  api.base.url: "http://localhost:8080"
+---
+spring:
+  profiles: test
+server:
+  port: 8081
+items:
+  api.base.url: "http://localhost:8080"
+---
+spring:
+  profiles: prod
+server:
+  port: 8081
+items:
+  api.base.url: "http://localhost:8080"
+
