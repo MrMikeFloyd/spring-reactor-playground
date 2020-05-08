@@ -43,6 +43,7 @@ public class ItemDataInitializer implements CommandLineRunner {
                 new Item(null, "Specialized Enduro Elite", 4999.00),
                 new Item(null, "Rondo Ruut ST", 2399.99),
                 new Item(null, "Santa Cruz Megatower", 7249.99),
-                new Item(null, "Newmen Alloy Wheelset 650b x 30", 699.99));
+                new Item(null, "Newmen Alloy Wheelset 650b x 30", 699.99),
+                new Item("SMPLITM001", "Generic sample item", 1.99));
     }
 }
