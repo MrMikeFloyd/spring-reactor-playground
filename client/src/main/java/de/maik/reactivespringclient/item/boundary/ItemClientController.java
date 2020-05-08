@@ -4,6 +4,7 @@ import de.maik.reactivespringclient.item.entity.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -89,6 +90,14 @@ public class ItemClientController {
                 .retrieve()
                 .bodyToMono(Item.class)
                 .log("PUT item to server: ");
+    }
+
+    @DeleteMapping(CLIENT_ITEMS_RESOURCE_ENDPOINT_URL + "/{itemId}")
+    public Mono<Void> deleteById(@PathVariable String itemId) {
+        return webClient.delete().uri(SERVER_ITEMS_RESOURCE_V2_ENDPOINT_URL.concat("/{itemId}"), itemId)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .log("DELETE item from server");
     }
 
 }
