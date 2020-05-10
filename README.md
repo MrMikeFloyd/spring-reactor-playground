@@ -27,9 +27,9 @@ The server application consists of three parts:
 
 The general API emits fluxes and monos. Nothing fancy, very basic:
 
-* `GET http://localhost:8080/flux` - emits a flux upon the `onComplete` event
-* `GET http://localhost:8080/fluxstream` - emits a flux upon every `onNext` event (cold publisher)
-* `GET http://localhost:8080/mono` - emits a mono upon the `onComplete` event
+* `GET http://localhost:8080/flux` - emits a flux with a fixed number of items
+* `GET http://localhost:8080/fluxstream` - emits an infinite flux (cold publisher)
+* `GET http://localhost:8080/mono` - emits a mono
 * `GET http://localhost:8080/functional/flux` - same as `/flux`, but implemented using functional-style routers and handlers
 * `GET http://localhost:8080/functional/mono` - same as `/mono`, but implemented using functional-style routers and handlers
 
@@ -64,6 +64,8 @@ The client provides a number of REST endpoints that use the server application a
 ## Further reading
 
 * The [Spring Reactor docs](https://projectreactor.io/docs) are a good place to start!
+* This [slide show](https://speakerdeck.com/simonbasle/projectreactor-dot-io-reactor3-intro) provides a good overall intro into the Spring Reactor API
+* This [short Tutorial](https://stackabuse.com/spring-reactor-tutorial/) gives a good first look at how to apply the reactive programming model to a Spring-powered API
 * [Another example](https://github.com/hantsy/spring-reactive-sample/blob/master/boot-routes/src/main/java/com/example/demo/DemoApplication.java) for reactive REST endpoint setups with Spring
 
 Unsure which operator to use? See https://projectreactor.io/docs/core/release/reference/#which-operator
